@@ -1,0 +1,100 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+// Function to display the elements of the array
+void displayArray(int arr[], int size) {
+    printf("Array elements: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Function to insert an element at a given position in the array
+int insertElement(int arr[], int size, int position, int element) {
+    if (size >= MAX_SIZE) {
+        printf("Array is full. Cannot insert element.\n");
+        return size;
+    }
+
+    if (position < 0 || position > size) {
+        printf("Invalid position. Cannot insert element.\n");
+        return size;
+    }
+
+    for (int i = size - 1; i >= position; i--) {
+        arr[i + 1] = arr[i];
+    }
+
+    arr[position] = element;
+    return size + 1;
+}
+
+// Function to delete an element at a given position from the array
+int deleteElement(int arr[], int size, int position) {
+    if (size <= 0) {
+        printf("Array is empty. Cannot delete element.\n");
+        return size;
+    }
+
+    if (position < 0 || position >= size) {
+        printf("Invalid position. Cannot delete element.\n");
+        return size;
+    }
+
+    for (int i = position; i < size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    return size - 1;
+}
+
+int main() {
+    int arr[MAX_SIZE], size = 0;
+    int choice, position, element;
+
+    printf("Enter the initial size of the array: ");
+    scanf("%d", &size);
+
+    printf("Enter %d elements:\n", size);
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    while (1) {
+        printf("\nArray Operations:\n");
+        printf("1. Display\n");
+        printf("2. Insert\n");
+        printf("3. Delete\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                displayArray(arr, size);
+                break;
+            case 2:
+                printf("Enter the position where you want to insert the element: ");
+                scanf("%d", &position);
+                printf("Enter the element to be inserted: ");
+                scanf("%d", &element);
+                size = insertElement(arr, size, position, element);
+                break;
+            case 3:
+                printf("Enter the position of the element to be deleted: ");
+                scanf("%d", &position);
+                size = deleteElement(arr, size, position);
+                break;
+            case 4:
+                printf("Exiting the program.\n");
+                return 0;
+            default:
+                printf("Invalid choice. Please try again.\n");
+                break;
+        }
+    }
+
+    return 0;
+}
